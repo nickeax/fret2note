@@ -3,6 +3,7 @@ const inp = document.querySelector('#inp')
 const output = document.querySelector('#output')
 const list = document.querySelector('#list')
 let allChordsArr = []
+let allFretBoardsArr = []
 const frets = [
     ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E'],
     ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A'],
@@ -12,64 +13,79 @@ const frets = [
     ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E']
 ]
 
-class fretBoard {
-    base
-    strings
-
-    constructor(str) {
-        this.base = document.createElement('div')
-        this.base.classList.add('fretboard base')
-
-
-
-        this.strings = [
-
-        ]
+class FretPosition {
+    segment
+    constructor(type, note, isFirst) {
+        this.createSegment(type, note, isFirst)
     }
-    draw() {
+
+    createSegment(t, nte, isFirst) {
+        let tmpCont = newElement('span', ['segmentContainer'])
+
+        let CL = []
+        CL.push('segment')
+        CL.push(t === 'note' ? 'segment--note' : 'segment--empty')
+        CL.push(isFirst ? 'nut' : 'segment--empty')
+        let tmp = newElement('span', CL)
+
+        let DCL = []
+        DCL.push(t === 'note' ? 'dot' : 'dot--hidden')
+        let dot = newElement('span', DCL)
+        dot.innerHTML = nte || "&nbsp"
+        tmp.appendChild(dot)
+        tmpCont.appendChild(tmp)
+        this.segment = tmpCont
+    }
+    draw(parent) {
+        parent.appendChild(this.segment)
+    }
+
+    newString() {
 
     }
 }
 
-// fretPostion objects represent a segment of the fretboard where there can be a note, or no note
-// They are responsible for drawing the visible portion of the fretboard object
-class fretPosition {
-    segment
-    constructor(type) {
-        this.createSegment(type)
-    }
+class FretBoard {
+    base
+    strings
+    fretNumber
+    stringNumber
+    inputFrets = []
 
-    createSegment(t) {
-        if (t === 'note') {
-            let tmp = document.createElement('span')
-            let dot = document.createElement('span')
-            tmp.classList.add('segment')
-            tmp.classList.add('segment--note')
-            dot.classList.add('dot')
-            tmp.appendChild(dot)
-            this.segment = tmp
-        } else {
-            let tmp = document.createElement('span')
-            tmp.classList.add('segment')
-            tmp.classList.add('segment--empty')
-            this.segment = tmp
+    constructor(str, fn = 7, sn = 6) {
+        this.strings = []
+        this.fretNumber = fn
+        this.stringNumber = sn
+        this.base = document.createElement('div')
+        this.base.classList.add('fretboard', 'base')
+        let tmpArr = str.split('')//.reverse()
+        this.inputFrets = tmpArr.map(x => {
+            return parseInt(x)
+        })
+
+        for (let i = this.stringNumber - 1; i >= 0; i--) {
+            let tmpSeg = []
+            for (let y = 0; y < this.fretNumber; y++) {
+                let flag = false;
+                if (this.inputFrets[i] === y) {
+                    tmpSeg.push(new FretPosition('note', translateFretNumber(y, i), y == 0))
+                } else {
+                    tmpSeg.push(new FretPosition('empty', "", y == 0))
+                }
+            }
+            this.strings.push(tmpSeg)
         }
     }
 
     draw(parent) {
-        parent.appendChild(this.segment)
+        this.strings.forEach(x => {
+            for (let i = 0; i < x.length; i++) {
+                x[i].draw(parent)
+            }
+            parent.innerHTML += "<br>"
+        })
     }
 }
-
-let arr = []
-let types = ['empty', 'note']
-for (let i = 0; i < 20; i++) {
-    arr.push(new fretPosition(types[Math.floor(Math.random() * types.length)]))
-}
-
-arr.forEach(x => {
-    x.draw(document.body);
-})
 
 inp.addEventListener('keyup', (eve) => {
     displayOutput(inp.value)
@@ -77,6 +93,11 @@ inp.addEventListener('keyup', (eve) => {
 
 inp.focus()
 
+function newElement(type, cl) {
+    let tmp = document.createElement(type)
+    tmp.classList.add(...cl)
+    return tmp
+}
 function displayOutput(str) {
     if (str.length > MAX_LEN) str = str.slice(0, MAX_LEN)
     let tmpArr = str.split('')
@@ -100,40 +121,56 @@ function displayOutput(str) {
     builder += `<span>${tmpStr}</span>`
     output.appendChild(tmpBtn)
     tmpBtn.addEventListener('click', ev => {
+        allFretBoardsArr.push(new FretBoard(inp.value))
         saveChord(tmpArr2)
     })
 }
 
 function displayChord(str) {
-
+    let fb = new FretBoard(str)
+    fb.draw(prt)
 }
 
 function saveChord(arr) {
     inp.value = ""
     inp.focus()
     allChordsArr.push(arr)
+    console.log(allFretBoardsArr);
     showAll()
 }
 
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
 function showAll() {
-    let tmp = ""
-    let plainText = []
+    removeAllChildNodes(list)
 
-    allChordsArr.forEach((x) => {
-        tmp += `<div class='listRow'>`
-        x.forEach((y, i) => {
-            if (i + 1 % MAX_LEN === 0) tmp += `YAY!<br />`
-            tmp += `<span class="listCell  ${selectAnim()}">${y}</span>`
-        })
-
-        x.forEach(y => {
-            plainText.push(`${y} `)
-        })
-
-        tmp += ` ${plainText.join('')}</div>`
-        list.innerHTML = tmp
-        plainText = []
+    allFretBoardsArr.forEach((x, i) => {
+        let fbAnchor = newElement('div', ['listRow'])
+        fbAnchor.innerHTML = drawNotesRow(i)
+        x.draw(fbAnchor)
+        list.appendChild(fbAnchor)
     })
+
+    // list.appendChild(fbAnchor)
+
+    // allFretBoardsArr.forEach((x, y) => {
+    //     x.draw(list)
+    // })
+}
+
+function drawNotesRow(row) {
+    let tmp = ""
+    tmp = `<div class="notesRow">`
+    allChordsArr[row].forEach((x, i) => {
+        if (i + 1 % MAX_LEN === 0) tmp += `<br />`
+        tmp += `<span class="listCell  ${selectAnim()}">${x}</span>`
+    })
+    tmp += `</div>`
+    return tmp
 }
 
 function translateFretNumber(number, str) {

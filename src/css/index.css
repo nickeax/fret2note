@@ -42,6 +42,14 @@ body {
     margin-bottom: 4.7rem;
 }
 
+.notesRow {
+    margin-bottom: 1.1rem;
+}
+
+.fbAnchor {
+    margin-bottom: 2rem;
+}
+
 .outputArea {
     margin: 2rem;
 }

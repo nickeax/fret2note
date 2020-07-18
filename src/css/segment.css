@@ -1,24 +1,51 @@
+.segmentContainer {
+    display: inline-block;
+}
+
 .segment {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 4rem;
-    height: 2rem;
-    border: rgb(80, 80, 80) 1px solid;
+    width: 2.5rem;
+    height: 1.9rem;
+    border-right: rgb(80, 80, 80) 2px solid;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+    border-right-width: 2px;
+    /* box-shadow: 1px 0 1px 2px rgba(0, 0, 0, 0.2); */
     background-color: var(--segmentBackground);
 }
-.dot {
+.dot, .dot--hidden {
+    font-family: arial;
     display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.2rem;
+    height: 1.2rem;
     z-index: 900;
-    background: #000;
+    color: rgb(255, 255, 255);
+    background: rgb(20, 75, 196);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.8);
     border-radius: 50%;
+    transform: translateX(9px);
 }
 
-.segment--note {
+.dot--hidden {
+    display: hidden;
+    opacity: 0;
+    background-color: var(--segmentBackground);
+    box-shadow: none;
 }
 
-.segment--empty {
-    
+.nut {
+    position:relative;
+    width: 1.2rem;
+    background-color: rgb(224, 209, 158);
+    border-bottom: 1px solid black;
+    margin-left: 5px;
+}
+
+.segment .segment--note .nut {
+    color: red;
+    transform: translateX(10);
 }
