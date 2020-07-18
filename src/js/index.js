@@ -27,9 +27,10 @@ class FretPosition {
         CL.push(t === 'note' ? 'segment--note' : 'segment--empty')
         CL.push(isFirst ? 'nut' : 'segment--empty')
         let tmp = newElement('span', CL)
-
+        
         let DCL = []
         DCL.push(t === 'note' ? 'dot' : 'dot--hidden')
+        DCL.push(isFirst ? 'nutNote' : 'dot-hidden')
         let dot = newElement('span', DCL)
         dot.innerHTML = nte || "&nbsp"
         tmp.appendChild(dot)
@@ -123,6 +124,7 @@ function displayOutput(str) {
     tmpBtn.addEventListener('click', ev => {
         allFretBoardsArr.push(new FretBoard(inp.value))
         saveChord(tmpArr2)
+        inp.value = ""
     })
 }
 
@@ -132,10 +134,10 @@ function displayChord(str) {
 }
 
 function saveChord(arr) {
-    inp.value = ""
+    // inp.value = ""
     inp.focus()
+    if(arr.length < 1) return
     allChordsArr.push(arr)
-    console.log(allFretBoardsArr);
     showAll()
 }
 
