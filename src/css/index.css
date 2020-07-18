@@ -1,13 +1,7 @@
-:root {
-    --rotate: 2deg;
-    --unrotate: -2deg;
-    --rotate2: 1.5deg;
-    --unrotate2: -3deg;
-    --rotate2: 0.5deg;
-    --unrotate2: -4deg;
-
-    --backGroundCol: #eee;
-}
+@import "./vars.css";
+@import "./animations.css";
+@import "./fretBoard.css";
+@import "./segment.css";
 
 body {
     background-color:  var(--backGroundCol);
@@ -42,27 +36,6 @@ body {
     box-shadow: 0 0 2px 3px rgba(22, 84, 255, 0.829);
     background-color: rgb(22, 84, 255);
     text-shadow: 1px 1px 1px white;
-}
-
-.anim1 {
-    animation: wobble;
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-}
-
-.anim2 {
-    animation: wobble2;
-    animation-duration: 3.5s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-}
-
-.anim3 {
-    animation: wobble2;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
 }
 
 .listRow {

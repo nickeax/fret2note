@@ -18,31 +18,58 @@ class fretBoard {
 
     constructor(str) {
         this.base = document.createElement('div')
-        this.base.classList.add('fretboard base')    
+        this.base.classList.add('fretboard base')
 
-        
-        
+
+
         this.strings = [
 
         ]
     }
     draw() {
-        
+
     }
 }
 
 // fretPostion objects represent a segment of the fretboard where there can be a note, or no note
 // They are responsible for drawing the visible portion of the fretboard object
 class fretPosition {
-    empty
-    note
-
+    segment
     constructor(type) {
-        if(type === 'note') {
-            this.
+        this.createSegment(type)
+    }
+
+    createSegment(t) {
+        if (t === 'note') {
+            let tmp = document.createElement('span')
+            let dot = document.createElement('span')
+            tmp.classList.add('segment')
+            tmp.classList.add('segment--note')
+            dot.classList.add('dot')
+            tmp.appendChild(dot)
+            this.segment = tmp
+        } else {
+            let tmp = document.createElement('span')
+            tmp.classList.add('segment')
+            tmp.classList.add('segment--empty')
+            this.segment = tmp
         }
     }
+
+    draw(parent) {
+        parent.appendChild(this.segment)
+    }
 }
+
+let arr = []
+let types = ['empty', 'note']
+for (let i = 0; i < 20; i++) {
+    arr.push(new fretPosition(types[Math.floor(Math.random() * types.length)]))
+}
+
+arr.forEach(x => {
+    x.draw(document.body);
+})
 
 inp.addEventListener('keyup', (eve) => {
     displayOutput(inp.value)
@@ -78,7 +105,7 @@ function displayOutput(str) {
 }
 
 function displayChord(str) {
-    
+
 }
 
 function saveChord(arr) {
@@ -102,7 +129,7 @@ function showAll() {
         x.forEach(y => {
             plainText.push(`${y} `)
         })
-        
+
         tmp += ` ${plainText.join('')}</div>`
         list.innerHTML = tmp
         plainText = []
@@ -122,6 +149,6 @@ function padStart(str, len) {
 }
 
 function selectAnim() {
-    let styles = ["anim1","anim2", "anim3"]
+    let styles = ["anim1", "anim2", "anim3"]
     return styles[Math.floor(Math.random() * styles.length)]
 }

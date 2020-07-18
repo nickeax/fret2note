@@ -1,0 +1,13 @@
+:root {
+    --rotate: 2deg;
+    --unrotate: -2deg;
+    --rotate2: 1.5deg;
+    --unrotate2: -3deg;
+    --rotate2: 0.5deg;
+    --unrotate2: -4deg;
+
+    --backGroundCol: #eee;
+
+    /* SEGMENT */
+    --segmentBackground: rgb(99, 72, 0);
+}

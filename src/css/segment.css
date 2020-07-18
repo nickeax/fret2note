@@ -1,0 +1,24 @@
+.segment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 2rem;
+    border: rgb(80, 80, 80) 1px solid;
+    background-color: var(--segmentBackground);
+}
+.dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    z-index: 900;
+    background: #000;
+    border-radius: 50%;
+}
+
+.segment--note {
+}
+
+.segment--empty {
+    
+}
