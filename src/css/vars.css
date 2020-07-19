@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Quicksand:wght@300;400;500;700&family=Ranchers&display=swap');
+
 :root {
     --rotate: 2deg;
     --unrotate: -2deg;
@@ -6,8 +8,14 @@
     --rotate2: 0.5deg;
     --unrotate2: -4deg;
 
-    --backGroundCol: #eee;
+    --backgroundColour: hsl(0, 0%, 66%);
 
     /* SEGMENT */
-    --segmentBackground: rgb(168, 136, 48);
+    --segmentBackground: rgb(190, 163, 87);
+
+    /*  DOTS */
+    --dotBackgroundColour: rgb(194, 89, 3);
+
+    /* STRINGS */
+    --stringColour: rgb(192, 183, 183);
 }

@@ -9,26 +9,58 @@
     width: 2.5rem;
     height: 1.9rem;
     border-right: rgb(80, 80, 80) 2px solid;
-    /* border-bottom: 1px solid rgba(0, 0, 0, 0.274); */
-    border-right-width: 2px;
-    /* box-shadow: 1px 0 1px 2px rgba(0, 0, 0, 0.2); */
+    /* border-right-width: 2px; */
     background-color: var(--segmentBackground);
+}
+
+.segment::after {
+    margin: -2.0rem;
+    display: inline-block;
+    width: 100%;
+    content: '';
+    box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.274);
+    transform: translateY(50%) translateX(-10px);
+}
+
+.string0::after {
+    border-bottom: 5px solid var(--stringColour);
+}
+.string1::after {
+    border-bottom: 4px solid var(--stringColour);
+}
+.string2::after {
+    border-bottom: 3px solid var(--stringColour);
+}
+.string3::after {
+    border-bottom: 2px solid var(--stringColour);
+}
+.string4::after {
+    border-bottom: 1px solid var(--stringColour);
+}
+.string5::after {
+    border-bottom: 1px solid var(--stringColour);
 }
 
 .dot, .dot--hidden, .nutNote {
     font-family: arial;
+    font-weight: 800;
     display: inline-block;
     display:flex;
     justify-content: center;
     align-items: center;
-    width: 1.4rem;
-    height: 1.4rem;
+    padding: 0.9rem;
+    width: 1.2rem;
+    height: 1.2rem;
     z-index: 900;
     color: rgb(255, 255, 255);
-    background: rgb(20, 75, 196);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.8);
+    text-shadow: 0 0 5px var(--dotBackgroundColour);
+    background: var(--dotBackgroundColour);
+    box-shadow: 
+        -3px 3px 2px 2px rgba(0, 0, 0, 0.274),
+        0 0 8px inset rgba(255, 255, 255, 0.493);
+    border: 1px solid rgb(165, 60, 0);
     border-radius: 50%;
-    transform: translateX(9px);
+    transform: translateX(-10px);
 }
 
 .dot--hidden {
@@ -41,17 +73,20 @@
 .nut {
     position:relative;
     width: 0.7rem;
-    background-color: rgb(224, 209, 158);
+    background-color: rgb(88, 72, 16);
     /* border-bottom: 1px solid black; */
     margin-left: 5px;
 }
 
 .nutNote {
     position: relative;
-    transform: translateX(-10px);
+    transform: translateX(-2.5rem);
     min-width: 1.2rem;
-    color: #000;
-    background-color: #fff;
-    /* border: 1px solid black; */
+    color: rgb(240, 240, 240);
+    background-color: rgb(15, 121, 107);
+    border: 1px solid rgb(12, 85, 75);
+    box-shadow: 
+        -3px 3px 2px 2px rgba(0, 0, 0, 0.274),
+        0 0 5px inset rgba(255, 255, 255, 0.493);
 }
 

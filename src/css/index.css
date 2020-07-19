@@ -2,15 +2,21 @@
 @import "./animations.css";
 @import "./fretBoard.css";
 @import "./segment.css";
-
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+#inp {
+    width: 20rem;
+    height: 2rem;
+    padding: 1rem 2rem;
+}
+
 body {
-    background-color:  var(--backGroundCol);
+    font-family: 'Quicksand';
+    background-color: var(--backgroundColour);
 }
 
 .noteCell, .noteCellList {
@@ -31,17 +37,25 @@ body {
     background-color: blue;
 }
 
+.listCellParent {
+    padding: 0.4rem;
+    background-color: rgba(255, 255, 255, 0.089);
+    border: 1px dotted rgba(255, 255, 255, 0.116);
+    display: inline-block;
+}
+
 .listCell {
     display: inline-block;
-    min-width: 1.7rem;
+    width: 2.7rem;
     height: 1rem;
     padding: 1rem;
-    margin: 0.25rem;
+    padding-bottom: 2rem;
+    margin: 0.15rem;
     border-radius: 10%;
     color: #fff;
-    box-shadow: 0 0 2px 3px rgba(22, 84, 255, 0.829);
+    box-shadow: 0 0 2px 2px rgba(22, 84, 255, 0.645);
     background-color: rgb(22, 84, 255);
-    text-shadow: 1px 1px 1px white;
+    text-shadow: 2px 1px 3px var(--backGroundCol);
 }
 
 .listRow {
@@ -75,40 +89,4 @@ div.saved {
     border: 1px solid black;
     background-color: #eee;
     width: 2rem;
-}
-
-@keyframes wobble {
-    0% {
-        transform: rotate(var(--rotate));
-    }
-    50% {
-        transform: rotate(var(--unrotate));
-    }
-    100% {
-        transform: rotate(var(--rotate));
-    }
-}
-
-@keyframes wobble2 {
-    0% {
-        transform: rotate(var(--rotate2));
-    }
-    50% {
-        transform: rotate(var(--unrotate2));
-    }
-    100% {
-        transform: rotate(var(--rotate2));
-    }
-}
-
-@keyframes wobble3 {
-    0% {
-        transform: rotate(var(--rotate3));
-    }
-    50% {
-        transform: rotate(var(--unrotate3));
-    }
-    100% {
-        transform: rotate(var(--rotate3));
-    }
 }

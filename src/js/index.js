@@ -15,15 +15,16 @@ const frets = [
 
 class FretPosition {
     segment
-    constructor(type, note, isFirst) {
-        this.createSegment(type, note, isFirst)
+    constructor(type, note, isFirst, stringNum) {
+        this.createSegment(type, note, isFirst, stringNum)
     }
 
-    createSegment(t, nte, isFirst) {
+    createSegment(t, nte, isFirst, stringNum) {
         let tmpCont = newElement('span', ['segmentContainer'])
 
         let CL = []
         CL.push('segment')
+        CL.push(`string${stringNum}`)
         CL.push(t === 'note' ? 'segment--note' : 'segment--empty')
         CL.push(isFirst ? 'nut' : 'segment--empty')
         let tmp = newElement('span', CL)
@@ -69,9 +70,9 @@ class FretBoard {
             for (let y = 0; y < this.fretNumber; y++) {
                 let flag = false;
                 if (this.inputFrets[i] === y) {
-                    tmpSeg.push(new FretPosition('note', translateFretNumber(y, i), y == 0))
+                    tmpSeg.push(new FretPosition('note', translateFretNumber(y, i), y == 0, i))
                 } else {
-                    tmpSeg.push(new FretPosition('empty', "", y == 0))
+                    tmpSeg.push(new FretPosition('empty', "", y == 0, i))
                 }
             }
             this.strings.push(tmpSeg)
@@ -89,10 +90,25 @@ class FretBoard {
 }
 
 inp.addEventListener('keyup', (eve) => {
+    
+    inp.value = isALlowed(inp.value)
+    // if(eve.keyCode < 48 || eve.keyCode >= 57) {
+    //     inp.value = ""
+    //     return
+    // }
     displayOutput(inp.value)
 })
 
 inp.focus()
+
+function isALlowed(chr) {
+    let tmpArr = chr.split('')
+    tmpArr = tmpArr.filter(x => {
+        return (parseInt(x) >= 0 && parseInt(x) <= 9 || x === 'x'.toLowerCase())
+    })
+
+    return tmpArr.join('')
+}
 
 function newElement(type, cl) {
     let tmp = document.createElement(type)
@@ -106,7 +122,11 @@ function displayOutput(str) {
     let tmpStr = ""
     let builder = ""
     let tmpBtn = document.createElement('button')
-    tmpBtn.innerText = "SAVE"
+    if(inp.value.length > 0) {
+        tmpBtn.innerText = "SAVE"
+    } else {
+        tmpBtn.innerHTML = ""
+    }
 
     tmpArr.forEach((x, i) => {
         tmpArr2.push(translateFretNumber(x, i))
@@ -124,7 +144,9 @@ function displayOutput(str) {
     tmpBtn.addEventListener('click', ev => {
         allFretBoardsArr.push(new FretBoard(inp.value))
         saveChord(tmpArr2)
+        tmpArr2 = []
         inp.value = ""
+        tmpBtn.style.display = 'none'
     })
 }
 
@@ -136,8 +158,8 @@ function displayChord(str) {
 function saveChord(arr) {
     // inp.value = ""
     inp.focus()
-    if(arr.length < 1) return
     allChordsArr.push(arr)
+    arr = []
     showAll()
 }
 
@@ -157,11 +179,6 @@ function showAll() {
         list.appendChild(fbAnchor)
     })
 
-    // list.appendChild(fbAnchor)
-
-    // allFretBoardsArr.forEach((x, y) => {
-    //     x.draw(list)
-    // })
 }
 
 function drawNotesRow(row) {
@@ -169,7 +186,7 @@ function drawNotesRow(row) {
     tmp = `<div class="notesRow">`
     allChordsArr[row].forEach((x, i) => {
         if (i + 1 % MAX_LEN === 0) tmp += `<br />`
-        tmp += `<span class="listCell  ${selectAnim()}">${x}</span>`
+        tmp += `<div class="listCellParent"><span class="listCell  ${selectAnim()}">${x}</span></div>`
     })
     tmp += `</div>`
     return tmp

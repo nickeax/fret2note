@@ -13,8 +13,45 @@
 }
 
 .anim3 {
-    animation: wobble2;
+    animation: wobble3;
     animation-duration: 0.5s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
+}
+
+
+@keyframes wobble {
+    0% {
+        transform: rotate(var(--rotate));
+    }
+    50% {
+        transform: rotate(var(--unrotate));
+    }
+    100% {
+        transform: rotate(var(--rotate));
+    }
+}
+
+@keyframes wobble2 {
+    0% {
+        transform: rotate(var(--rotate2));
+    }
+    50% {
+        transform: rotate(var(--unrotate2));
+    }
+    100% {
+        transform: rotate(var(--rotate2));
+    }
+}
+
+@keyframes wobble3 {
+    0% {
+        transform: rotate(var(--rotate3));
+    }
+    50% {
+        transform: rotate(var(--unrotate3));
+    }
+    100% {
+        transform: rotate(var(--rotate3));
+    }
 }
