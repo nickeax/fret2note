@@ -15,21 +15,33 @@
     transition: all 0.1s ease-in-out;
 }
 
-.newChord {
-    display: inline-block;
-    height: 0.1rem;
-    background-color: #red;
-}
-
 .btnSave {
     background-color: rgb(2, 85, 16);
+}
+
+.btnRemove {
+    background-color: rgba(255, 255, 255, 0.075);
+    /* border: 1px solid rgba(0, 0, 0, 0.356); */
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: rgb(245, 14, 14);
+    width: 1.3rem;
+    /* margin: -2rem 10.2rem; */
+    transform: translateX(14rem) translateY(-2rem);
+    /* float: right; */
+}
+
+.btnRemove:hover {
+    background-color: rgba(255, 255, 255, 0.438);
 }
 
 #clearAll {
     background-color: red;
 }
 
-#clearAll:hover, #clearAll:hover, .btnSave:hover {
+#clearAll:hover, #clearAll:hover, .btnSave:hover,  .btnRemove:hover {
     cursor: pointer;
 }
 
@@ -41,6 +53,7 @@
     background-color: rgba(2, 85, 16, 0.507);
 
 }
+
 
 .instructions {
     font-size: 1.3rem;

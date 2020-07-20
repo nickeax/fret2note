@@ -27,11 +27,11 @@ class FretPosition {
 
     createSegment(t, nte, isFirst, stringNum) {
         let tmpCont = newElement('span', ['segmentContainer'])
-
         let CL = []
         CL.push('segment')
         CL.push(`string${stringNum}`)
         CL.push(t === 'note' ? 'segment--note' : 'segment--empty')
+        CL.push(t === 'X' ? 'dot--x' : 'segment--empty')
         CL.push(isFirst ? 'nut' : 'segment--empty')
         let tmp = newElement('span', CL)
 
@@ -44,6 +44,7 @@ class FretPosition {
         tmpCont.appendChild(tmp)
         this.segment = tmpCont
     }
+
     draw(parent) {
         parent.appendChild(this.segment)
     }
@@ -68,11 +69,10 @@ class FretBoard {
         this.base.classList.add('fretboard', 'base')
         let tmpArr = str.split('')//.reverse()
         
-        tmpArr = tmpArr.map(x => {
-            return parseInt(x)
-        })
+        this.inputFrets = tmpArr 
 
         this.fretNumber = tmpArr.reduce((a, c) => {
+            if(c === 'x') c = 0
             a = Math.max(a, c)
             return a 
         }, 0)
@@ -85,18 +85,25 @@ class FretBoard {
             this.fretNumber = MIN_FRETS
         }
         
-        this.inputFrets = tmpArr
+        this.inputFrets = tmpArr.map(x => {
+            if(x === 'x' || x === 'X') return 'X'
+            return parseInt(x)
+        })
 
         for (let i = this.stringNumber - 1; i >= 0; i--) {
             let tmpSeg = []
             for (let y = 0; y <= this.fretNumber; y++) {
                 let flag = false;
+                // console.log(`inputFrets(${i}): ${this.inputFrets[i]}`);
                 if (this.inputFrets[i] === y) {
                     tmpSeg.push(new FretPosition('note', translateFretNumber(y, i), y == 0, i))
+                } else if (this.inputFrets[i] === 'X') {
+                    tmpSeg.push(new FretPosition('X', 'X', y == 0, i))
                 } else {
                     tmpSeg.push(new FretPosition('empty', "", y == 0, i))
                 }
             }
+            // console.log(tmpSeg);
             this.strings.push(tmpSeg)
         }
     }
@@ -168,10 +175,10 @@ function displayOutput(str) {
     let tmpArr = str.split('')
     let tmpArr2 = []
     let tmpStr = ""
-    let tmpBtn = document.createElement('span')
+    let tmpBtn = document.createElement('submit')
     tmpBtn.classList.add('buttons', 'btnSave')
     if (inp.value.length > 0) {
-        tmpBtn.innerText = "SAVE"
+        tmpBtn.innerText = "ADD"
     } else {
         tmpBtn.innerText = ""
     }
@@ -181,7 +188,7 @@ function displayOutput(str) {
     })
 
     output.innerHTML = ""
-    output.innerHTML = "<h3>Current notes <tt>(to add, click SAVE)</tt></h3>"
+    output.innerHTML = "<h3 class='listCellParent'>Last notes entered</h3>"
     tmpArr2.forEach((x, i) => {
         tmpStr += `${x} `
         output.innerHTML += `<span class="noteCell">${x}</span>`
@@ -189,6 +196,7 @@ function displayOutput(str) {
 
     output.appendChild(tmpBtn)
     tmpBtn.addEventListener('click', ev => {
+        ev.preventDefault()
         allFretBoardsArr.push(new FretBoard(inp.value))
         saveChord(tmpArr2)
         tmpArr2 = []
@@ -218,19 +226,26 @@ function removeAllChildNodes(parent) {
 
 function showAll() {
     removeAllChildNodes(list)
-    
     if (allChordsArr.length > 0) {
         clearAll.disabled = false
     } 
     
     allFretBoardsArr.forEach((x, i) => {
-        console.log(`INDEX: ${i}`);
         let fbAnchor = newElement('div', ['listRow'])
+        let btnRemove = newElement('span', ['buttons', 'btnRemove'])
+        btnRemove.innerHTML = "&#10007;"
         fbAnchor.innerHTML = drawNotesRow(i)
         x.draw(fbAnchor)
+        fbAnchor.appendChild(btnRemove)
+        btnRemove.addEventListener('click', ev => {
+            if (confirm("Are you sure? This chord will be removed...")) {
+                allFretBoardsArr.splice(i, 1)
+                allChordsArr.splice(i, 1)
+                showAll()
+            }
+        })
         list.appendChild(fbAnchor)
     })
-
 }
 
 function drawNotesRow(row) {
