@@ -1,4 +1,7 @@
 .fretboard {
     display: flex;
-    background-color: red;
+}
+
+.base {
+    border: 2rem green solid;
 }

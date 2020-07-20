@@ -1,0 +1,54 @@
+#inp {
+    width: 90%;
+    height: 2rem;
+    padding: 0.4rem 2rem;
+}
+
+.buttons {
+    display: inline-block;
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 10rem;
+    color: #eee;
+    padding: 0.2rem;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+}
+
+.newChord {
+    display: inline-block;
+    height: 0.1rem;
+    background-color: #red;
+}
+
+.btnSave {
+    background-color: rgb(2, 85, 16);
+}
+
+#clearAll {
+    background-color: red;
+}
+
+#clearAll:hover, #clearAll:hover, .btnSave:hover {
+    cursor: pointer;
+}
+
+#clearAll:hover, #clearAll:active {
+    background-color: rgb(150, 3, 3);
+}
+
+.btnSave:hover {
+    background-color: rgba(2, 85, 16, 0.507);
+
+}
+
+.instructions {
+    font-size: 1.3rem;
+    background-color: lightcyan;
+    color: darkred;
+
+    padding: 1rem;
+    line-height: 1.5;
+
+    border-bottom: 2px solid #eee;
+}

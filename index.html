@@ -9,10 +9,16 @@
 </head>
 <body>
   <div class="container">
+    <p class="instructions">
+      Enter the TAB numbers for each chord, one by one. Click 'SAVE' and you'll see a visual representation of the chord as well as the notes used.
+    </p>
     <div class="outputArea">
-      <input type="text" id="inp" autocomplete="off" placeholder="fret numbers"><br>
-      <input id="clearAll" type="button" value="CLEAR ALL">
+      <input type="text" id="inp" autocomplete="off" placeholder="enter TAB fret numbers lowest to highest"><br>
+      <span id="clearAll">clear all chords</span>
+      
+      
       <div id="output"></div>
+      
       <div class="list" id="list"></div>
     </div>
   </div>
